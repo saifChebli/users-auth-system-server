@@ -1,14 +1,16 @@
 import express from 'express'
-import { getUsers, signUp } from '../controllers/userController.js'
-
+import { getProfile } from '../controllers/userController.js'
+import { protect } from '../middlewares/authMiddleware.js'
 
 
 const router = express.Router()
 
 
+// Private Routes
 
-router.get("/get-users" , getUsers)
-router.post("/sign-up" , signUp)
+router.get("/me" , protect , getProfile)
+
+
 
 
 

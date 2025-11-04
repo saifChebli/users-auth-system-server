@@ -1,9 +1,9 @@
-import User from "../models/User.js";
-
+import User from "../models/User.js"
 
 
 
 // Get all users
+
 
 export const getUsers = async (req,res) => {
 
@@ -16,22 +16,34 @@ export const getUsers = async (req,res) => {
 
 }
 
+// Get one user by ID
 
-// Create a new User
-
-export const signUp = async (req,res) => {
-
-    const { name , email , age } = req.body
+export const getUserById = async (req,res) => {
+    const userId = req.params.id
 
     try {
-        // check if user is exist
-        const existUser = await User.findOne({email})
-        if (existUser) return res.status(400).json({message : "Bad credentials !"})
+        const user = await User.findById(userId)
+        if (!user) return res.status(404).json({message : "User not found"})
         
-        const user = await User.create({name , email , age})
-
-        res.status(201).json({message : "Account created successfully" , user})
+        res.json(user)
     } catch (error) {
+        console.log(error)
+        res.status(500).json({message : "Internal server error"})
+    }
+
+}
+
+
+
+
+export const getProfile = async (req,res) => {
+    try {
+        const user = await User.findById(req.user.id)
+        if (!user) return res.status(404).json({message : "User not found"})
+        
+        res.json(user)
+    } catch (error) {
+        console.log(error)
         res.status(500).json({message : "Internal server error"})
     }
 }
