@@ -19,7 +19,7 @@ export const signUp = async (req,res) => {
             
         // Validation 
 
-        if(!validator.isEmail(email)) return res.status(400).json({message : "Not valid email !"})
+        if(!validator.isEmail(email)) return res.status(400).json({message : "Invalid email !"})
 
         if(!validator.isLength(password , { min : 8 })) return res.status(400).json({message : "Password must be more than 7 digits !"})
         
@@ -54,7 +54,7 @@ export const login = async (req,res) => {
         
         // validation 
 
-        if (!validator.isEmail(email)) return res.status(400).json({message : "Not valid email !"})
+        if (!validator.isEmail(email)) return res.status(400).json({message : "Invalid email !"})
 
         const user = await User.findOne({email}).select("+password") // include password since select : false
         
