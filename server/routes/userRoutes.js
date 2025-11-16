@@ -2,6 +2,7 @@ import express from 'express'
 import { changePassword, getProfile, getUsers, updateProfile } from '../controllers/userController.js'
 import { protect } from '../middlewares/authMiddleware.js'
 import { authorize } from '../middlewares/roleMiddleware.js'
+import { upload } from '../middlewares/upload.js'
 
 const router = express.Router()
 
@@ -9,7 +10,7 @@ const router = express.Router()
 // Private Routes
 
 router.get("/me" , protect , getProfile)
-router.put("/update-me" , protect , updateProfile)
+router.put("/update-me" , protect , upload.single("profilePicture") , updateProfile)
 router.put("/change-password" , protect , changePassword)
 
 

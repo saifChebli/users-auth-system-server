@@ -62,6 +62,10 @@ export const updateProfile = async (req,res) => {
        if(email){
            if (!validator.isEmail(email)) return res.status(400).json({message : "Invalid email"})   
         }     
+
+        if(req.file){
+            
+        }
         if (name) user.name = name
         if (email) user.email = email
 

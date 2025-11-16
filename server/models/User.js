@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     required : true,
     unique : true
   },
+  photo : String,
   password : {type : String , required : true , select : false}, // select : false prevents default responses from sending the password
   role : {type : String , enum : ["user" , "admin"] , default : "user"}
 }, {
