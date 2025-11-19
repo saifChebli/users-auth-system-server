@@ -7,6 +7,9 @@ const storage = multer.diskStorage({
     filename : (req , file , cb) => {
         const uniqueExt = path.extname(file.originalname)
         cb(null , `user-${Date.now()}${uniqueExt}`)
+    },
+    limits : {
+        fileSize : 5 * 1024 * 1024 // 5MB
     }
 })
 

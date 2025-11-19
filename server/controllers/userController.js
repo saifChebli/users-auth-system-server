@@ -55,22 +55,22 @@ export const getProfile = async (req,res) => {
 export const updateProfile = async (req,res) => {
 
     const { name , email } = req.body
+    
     try {
-        const user = await User.findById(req.user.id)
-        if (!user) return res.status(404).json({message : "User not found"})
-        
-       if(email){
-           if (!validator.isEmail(email)) return res.status(400).json({message : "Invalid email"})   
-        }     
-
-        if(req.file){
+        // const user = await User.findById(req.user.id)
+        // if (!user) return res.status(404).json({message : "User not found"})
             
+            if(email){
+                if (!validator.isEmail(email)) return res.status(400).json({message : "Invalid email"})   
+                }     
+        const update = { name , email }
+        
+        if(req.file){
+            update.photo = `/uploads/profile/${req.file.filename}`
         }
-        if (name) user.name = name
-        if (email) user.email = email
 
-        await user.save()
-        res.json({message : "Profile updated" , user})
+        const updatedUser = await User.findByIdAndUpdate(req.user.id , update).select("-password")
+        res.status(200).json({message : "Profile updated" , updatedUser})
     } catch (error) {
         console.log(error)
         res.status(500).json({message : "Internal server error"})

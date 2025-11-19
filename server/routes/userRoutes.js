@@ -10,7 +10,7 @@ const router = express.Router()
 // Private Routes
 
 router.get("/me" , protect , getProfile)
-router.put("/update-me" , protect , upload.single("profilePicture") , updateProfile)
+router.put("/update-me" , protect , upload.single("photo") , updateProfile)
 router.put("/change-password" , protect , changePassword)
 
 
